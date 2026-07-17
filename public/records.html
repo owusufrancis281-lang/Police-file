@@ -2,15 +2,84 @@
 <html>
 
 <head>
-    <title>Case Records - Police-file</title>
+    <title>Case Records</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h1>Case Records</h1>
+<h1>Police-file Case Records</h1>
 
-<p>Registered cases will appear here.</p>
+<table border="1">
+
+<tr>
+    <th>Case Number</th>
+    <th>Location</th>
+    <th>Incident Type</th>
+    <th>Officer</th>
+</tr>
+
+<tbody id="caseTable">
+
+</tbody>
+
+</table>
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import { 
+getFirestore,
+collection,
+getDocs
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB0i-UUX2LjqK19Z0rzpirEF8mTnEeH9c4",
+  authDomain: "police-file.firebaseapp.com",
+  projectId: "police-file",
+  storageBucket: "police-file.firebasestorage.app",
+  messagingSenderId: "678648437133",
+  appId: "1:678648437133:web:3bf6d3d2c597549966c5c4"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+const querySnapshot = await getDocs(collection(db, "cases"));
+
+
+querySnapshot.forEach((doc) => {
+
+    let caseData = doc.data();
+
+    document.getElementById("caseTable").innerHTML += `
+
+    <tr>
+
+    <td>${caseData.caseNumber}</td>
+
+    <td>${caseData.location}</td>
+
+    <td>${caseData.incidentType}</td>
+
+    <td>${caseData.officerName}</td>
+
+    </tr>
+
+    `;
+
+});
+
+
+</script>
+
 
 </body>
 
