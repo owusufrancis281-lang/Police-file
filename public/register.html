@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Public Registration</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>Create Account</h1>
+
+<form id="registerForm">
+
+<label>Name:</label><br>
+<input type="text" id="name" required><br><br>
+
+<label>Email:</label><br>
+<input type="email" id="email" required><br><br>
+
+<label>Password:</label><br>
+<input type="password" id="password" required><br><br>
+
+<button type="submit">
+Register
+</button>
+
+</form>
+
+
+<p id="message"></p>
+
+
+<script type="module">
+
+import { initializeApp } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import { 
+getAuth,
+createUserWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB0i-UUX2LjqK19Z0rzpirEF8mTnEeH9c4",
+  authDomain: "police-file.firebaseapp.com",
+  projectId: "police-file",
+  storageBucket: "police-file.firebasestorage.app",
+  messagingSenderId: "678648437133",
+  appId: "1:678648437133:web:3bf6d3d2c597549966c5c4"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+
+document.getElementById("registerForm")
+.addEventListener("submit", async(e)=>{
+
+e.preventDefault();
+
+
+let email = document.getElementById("email").value;
+
+let password = document.getElementById("password").value;
+
+
+try{
+
+await createUserWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+
+alert("Registration successful");
+
+window.location.href="index.html";
+
+
+}catch(error){
+
+document.getElementById("message").innerHTML =
+error.message;
+
+}
+
+
+});
+
+
+</script>
+
+
+</body>
+
+</html>
