@@ -83,7 +83,19 @@ document.getElementById("reportForm")
 
 e.preventDefault();
 
+let evidenceURL = "";
 
+const file = document.getElementById("evidence").files[0];
+
+if (file) {
+
+    const storageRef = ref(storage, "publicReports/" + Date.now() + "-" + file.name);
+
+    await uploadBytes(storageRef, file);
+
+    evidenceURL = await getDownloadURL(storageRef);
+
+}
 await addDoc(collection(db,"publicReports"),{
 
 name: document.getElementById("name").value,
@@ -95,7 +107,7 @@ location: document.getElementById("location").value,
 incidentType: document.getElementById("type").value,
 
 description: document.getElementById("description").value,
-
+evidence: evidenceURL,
 date: new Date()
 
 });
