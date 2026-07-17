@@ -54,7 +54,18 @@
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { 
+getFirestore, 
+collection, 
+addDoc 
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+import {
+getStorage,
+ref,
+uploadBytes,
+getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
 
 const firebaseConfig = {
@@ -70,11 +81,24 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
+    const storage = getStorage(app);
 
 
 document.querySelector("form").addEventListener("submit", async (e) => {
     e.preventDefault();
+let evidenceURL = "";
 
+const file = document.getElementById("evidence").files[0];
+
+if(file){
+
+const storageRef = ref(storage, "evidence/" + file.name);
+
+await uploadBytes(storageRef, file);
+
+evidenceURL = await getDownloadURL(storageRef);
+
+}
     await addDoc(collection(db, "cases"), {
     caseNumber: document.getElementById("caseNumber").value,
     dateReported: document.getElementById("dateReported").value,
@@ -84,6 +108,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     contactNumber: document.getElementById("contactNumber").value,
     description: document.getElementById("description").value,
     officerName: document.getElementById("officerName").value,
+    evidence: evidenceURL,
     createdAt: new Date()
 });
 
