@@ -82,7 +82,19 @@ document.getElementById("details").innerHTML = `
 <p><b>Description:</b> ${data.description}</p>
 
 <p><b>Officer:</b> ${data.officerName}</p>
+<p>
+<b>Evidence:</b>
+<br>
 
+${data.evidence ? 
+`<a href="${data.evidence}" target="_blank">
+View / Download File
+</a>` 
+: 
+"No evidence uploaded"
+}
+
+</p>
 `;
 
 }else{
