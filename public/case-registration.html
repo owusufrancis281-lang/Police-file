@@ -69,9 +69,16 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     await addDoc(collection(db, "cases"), {
-        status: "New Case",
-        createdAt: new Date()
-    });
+    caseNumber: document.getElementById("caseNumber").value,
+    dateReported: document.getElementById("dateReported").value,
+    location: document.getElementById("location").value,
+    incidentType: document.getElementById("incidentType").value,
+    complainantName: document.getElementById("complainantName").value,
+    contactNumber: document.getElementById("contactNumber").value,
+    description: document.getElementById("description").value,
+    officerName: document.getElementById("officerName").value,
+    createdAt: new Date()
+});
 
     alert("Case saved successfully");
 });
