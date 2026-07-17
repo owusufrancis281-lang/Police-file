@@ -34,15 +34,11 @@
 <textarea id="description" placeholder="Describe the incident"></textarea>
     <br>
 
-<label>Upload Evidence (Image/File):</label><br>
+<label>Upload Evidence (Images/Documents):</label><br>
 
-<input type="file" id="evidence">
+<input type="file" id="evidence" accept="image/*,.pdf,.doc,.docx">
 
 <br><br>
-<br><br>
-    
-<label>Attach Evidence (Images/Documents):</label><br>
-<input type="file" accept="image/*,.pdf,.doc,.docx" multiple>
 
 <br><br>
 <label>Reporting Officer:</label><br>
@@ -60,14 +56,6 @@ collection,
 addDoc 
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-import {
-getStorage,
-ref,
-uploadBytes,
-getDownloadURL
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
-
-
 const firebaseConfig = {
   apiKey: "AIzaSyB0i-UUX2LjqK19Z0rzpirEF8mTnEeH9c4",
   authDomain: "police-file.firebaseapp.com",
@@ -81,8 +69,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
-    const storage = getStorage(app);
-
+    
 
 document.querySelector("form").addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -92,14 +79,25 @@ const file = document.getElementById("evidence").files[0];
 
 if(file){
 
-const storageRef = ref(storage, "evidence/" + file.name);
+const formData = new FormData();
 
-await uploadBytes(storageRef, file);
+formData.append("file", file);
 
-evidenceURL = await getDownloadURL(storageRef);
+formData.append("upload_preset", "policefile_upload");
 
+const uploadResponse = await fetch(
+"https://api.cloudinary.com/v1_1/crsyohqc/auto/upload",
+{
+method: "POST",
+body: formData
 }
-    await addDoc(collection(db, "cases"), {
+);
+
+const uploadData = await uploadResponse.json();
+
+evidenceURL = uploadData.secure_url;
+
+}    await addDoc(collection(db, "cases"), {
     caseNumber: document.getElementById("caseNumber").value,
     dateReported: document.getElementById("dateReported").value,
     location: document.getElementById("location").value,
