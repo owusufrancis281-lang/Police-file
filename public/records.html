@@ -68,7 +68,7 @@ querySnapshot.forEach((doc) => {
 
     document.getElementById("caseTable").innerHTML += `
 
-    <tr>
+  <tr onclick="window.location.href='case-details.html?id=${doc.id}'">
 
     <td>${caseData.caseNumber}</td>
 
