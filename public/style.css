@@ -56,3 +56,42 @@ a {
     color: red;
     text-decoration: none;
 }
+/* Dashboard Design */
+
+body {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    font-size: 35px;
+}
+
+h2 {
+    margin-top: 20px;
+}
+
+button {
+    background: white;
+    color: #1e3c72;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+#totalCases {
+    background: white;
+    color: #1e3c72;
+    display: inline-block;
+    padding: 20px 40px;
+    border-radius: 15px;
+    font-size: 35px;
+}
