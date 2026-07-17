@@ -102,7 +102,11 @@ onAuthStateChanged(auth, (user) => {
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
+import { 
+getFirestore, 
+collection, 
+getDocs 
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 const firebaseConfig = {
   apiKey: "AIzaSyB0i-UUX2LjqK19Z0rzpirEF8mTnEeH9c4",
   authDomain: "police-file.firebaseapp.com",
@@ -114,7 +118,13 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
+getDocs(collection(db, "cases"))
+.then((snapshot) => {
 
+    document.getElementById("totalCases").innerHTML = snapshot.size;
+
+});
 document.getElementById("logoutBtn").addEventListener("click", function() {
 
     signOut(auth).then(() => {
