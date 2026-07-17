@@ -87,9 +87,16 @@ document.getElementById("details").innerHTML = `
 <br>
 
 ${data.evidence ? 
-`<a href="${data.evidence}" target="_blank">
+`
+<a href="${data.evidence}" target="_blank">
 View / Download File
-</a>` 
+</a>
+
+<br><br>
+
+<img src="${data.evidence}" 
+style="width:300px; border-radius:10px;">
+`
 : 
 "No evidence uploaded"
 }
