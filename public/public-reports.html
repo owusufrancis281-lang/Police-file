@@ -96,7 +96,48 @@ Create Case
 
 });
 
+window.createCase = async function(reportId){
 
+const reportRef = doc(db, "publicReports", reportId);
+
+const reportSnap = await getDoc(reportRef);
+
+
+if(reportSnap.exists()){
+
+let data = reportSnap.data();
+
+
+await addDoc(collection(db, "cases"), {
+
+caseNumber: "CASE-" + Date.now(),
+
+dateReported: new Date(),
+
+location: data.location,
+
+incidentType: data.incidentType,
+
+complainantName: data.name,
+
+contactNumber: data.contact,
+
+description: data.description,
+
+officerName: "Pending Assignment",
+
+createdAt: new Date()
+
+});
+
+
+alert("Case created successfully");
+
+
+}
+
+
+}
 </script>
 
 
