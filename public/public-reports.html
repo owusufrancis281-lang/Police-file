@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Public Reports</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>Public Incident Reports</h1>
+
+<table border="1">
+
+<tr>
+<th>Name</th>
+<th>Contact</th>
+<th>Location</th>
+<th>Incident Type</th>
+<th>Description</th>
+</tr>
+
+<tbody id="reportTable">
+
+</tbody>
+
+</table>
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDocs
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+
+const firebaseConfig = {
+apiKey: "AIzaSyB0i-UUX2LjqK19Z0rzpirEF8mTnEeH9c4",
+authDomain: "police-file.firebaseapp.com",
+projectId: "police-file",
+storageBucket: "police-file.firebasestorage.app",
+messagingSenderId: "678648437133",
+appId: "1:678648437133:web:3bf6d3d2c597549966c5c4"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+const reports = await getDocs(
+collection(db,"publicReports")
+);
+
+
+reports.forEach((doc)=>{
+
+
+let data = doc.data();
+
+
+document.getElementById("reportTable").innerHTML += `
+
+<tr>
+
+<td>${data.name}</td>
+
+<td>${data.contact}</td>
+
+<td>${data.location}</td>
+
+<td>${data.incidentType}</td>
+
+<td>${data.description}</td>
+
+</tr>
+
+`;
+
+
+});
+
+
+</script>
+
+
+</body>
+
+</html>
