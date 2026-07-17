@@ -52,3 +52,7 @@ table {
 th, td {
     padding: 12px;
 }
+a {
+    color: red;
+    text-decoration: none;
+}
