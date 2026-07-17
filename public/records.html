@@ -24,6 +24,7 @@ placeholder="Search cases..."
     <th>Location</th>
     <th>Incident Type</th>
     <th>Officer</th>
+    <th>Evidence</th>
 </tr>
 
 <tbody id="caseTable">
@@ -78,7 +79,13 @@ querySnapshot.forEach((doc) => {
 
     <td>${caseData.officerName}</td>
 
-    </tr>
+<td>
+${caseData.evidence ? 
+`<a href="${caseData.evidence}" target="_blank">View Evidence</a>` 
+: "No Evidence"}
+</td>
+
+</tr>
 
     `;
 
