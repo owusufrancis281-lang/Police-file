@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Report Incident</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>Report an Incident</h1>
+
+<form id="reportForm">
+
+<label>Your Name:</label><br>
+<input type="text" id="name" required><br><br>
+
+<label>Contact Number:</label><br>
+<input type="text" id="contact" required><br><br>
+
+<label>Location:</label><br>
+<input type="text" id="location" required><br><br>
+
+<label>Incident Type:</label><br>
+<input type="text" id="type" required><br><br>
+
+<label>Description:</label><br>
+<textarea id="description" required></textarea>
+<br><br>
+
+<button type="submit">
+Submit Report
+</button>
+
+</form>
+
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+addDoc
+}
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+
+const firebaseConfig = {
+apiKey: "AIzaSyB0i-UUX2LjqK19Z0rzpirEF8mTnEeH9c4",
+authDomain: "police-file.firebaseapp.com",
+projectId: "police-file",
+storageBucket: "police-file.firebasestorage.app",
+messagingSenderId: "678648437133",
+appId: "1:678648437133:web:3bf6d3d2c597549966c5c4"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+
+document.getElementById("reportForm")
+.addEventListener("submit", async(e)=>{
+
+e.preventDefault();
+
+
+await addDoc(collection(db,"publicReports"),{
+
+name: document.getElementById("name").value,
+
+contact: document.getElementById("contact").value,
+
+location: document.getElementById("location").value,
+
+incidentType: document.getElementById("type").value,
+
+description: document.getElementById("description").value,
+
+date: new Date()
+
+});
+
+
+alert("Report submitted successfully");
+
+});
+
+</script>
+
+
+</body>
+
+</html>
